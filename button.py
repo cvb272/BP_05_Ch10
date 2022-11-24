@@ -209,7 +209,7 @@ def game(x,y):
 window = Tk()
 font1 = ("굴림체",30,"bold") #폰트 설정
 font2 = ("굴림체",20,"bold") #폰트 설정
-A = {1:"C:/Users/정다빈/Desktop/1.gif",2:"C:/Users/정다빈/Desktop/2.gif",3:"C:/Users/정다빈/Desktop/3.gif"} #딕셔너리를 이용해 파일 경로를 저장해서 불러오기 편하게 해줌
+A = {1:"C:/Users/박서진/Desktop/1.gif",2:"C:/Users/박서진/Desktop/2.gif",3:"C:/Users/정다빈/Desktop/3.gif"} #딕셔너리를 이용해 파일 경로를 저장해서 불러오기 편하게 해줌
 
 photo1 = PhotoImage(file=A[3]) #파일 경로를 설정하여 사진을 불러옴
 photo2 = PhotoImage(file=A[3]) #파일 경로를 설정하여 사진을 불러옴
