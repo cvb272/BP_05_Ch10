@@ -163,75 +163,106 @@ b2.grid(row=3,column=1)
 window.mainloop()
 
 #6
+from random import *
 from tkinter import *
-import random
 
-def change_image(x):
-    y = random.randint(1,3)
-    change1(x) #change1 함수를 통해 사용자가 선택한 것으로 사진을 바꿔 줌
-    change2(y) #change2 함수를 통해 랜덤으로 돌린 숫자로 사진을 바꿔 줌
-    game(x,y) #결과값을 보여주는 함수
+# 선택 하는 부분
+def user_choice_rock():
+    user_choice = "rock"
+    turn(user_choice)
+    user_image.configure(image=rock_image)
+def user_choice_paper():
+    user_choice = "paper"
+    turn(user_choice)
+    user_image.configure(image=paper_image)
+def user_choice_scissors():
+    user_choice = "scissors"
+    turn(user_choice)
+    user_image.configure(image=scissors_image)
+# 게임부분
+def turn(user_choice):
+    oppo = ['rock', 'paper', 'scissors']
+    oppo_choice=oppo[randint(0,2)]
+    if(oppo_choice=='rock'):
+        oppo_image.configure(image=rock_image)
+        if(user_choice=='paper'):
+           turn_result.configure(text="사용자 승!", fg="green")
+           compare.configure(text=">>>>>")
+        elif(user_choice=='scissors'):
+            turn_result.configure(text="컴퓨터 승!", fg="red")
+            compare.configure(text="<<<<<")
+        else:
+            turn_result.configure(text="무승부", fg="gray")
+            compare.configure(text="=====")
 
-def change1(x): #사용자 사진 교체
-    photo1 = PhotoImage(file=A[x])
-    label1.configure(image=photo1)
-    label1.image = photo1
+   elif(oppo_choice=='paper'):
+       oppo_image.configure(image=paper_image)
+       if(user_choice=='scissors'):
+          turn_result.configure(text="사용자 승!", fg="green")
+          compare.configure(text=">>>>>")
+   elif(user_choice=='rock'):
+       turn_result.configure(text="컴퓨터 승!", fg="red")
+       compare.configure(text="<<<<<")
+   else:
+       turn_result.configure(text="무승부", fg="gray")
+       compare.configure(text="=====")
 
-def change2(x): #컴퓨터 사진 교체
-    photo2 = PhotoImage(file=A[x])
-    label3.configure(image=photo2)
-    label3.image = photo2
+ elif(oppo_choice=='scissors'):
+     oppo_image.configure(image=scissors_image)
+     if(user_choice=='rock'):
+        turn_result.configure(text="사용자 승!", fg="green")
+        compare.configure(text=">>>>>")
+     elif(user_choice=='paper'):
+         turn_result.configure(text="컴퓨터 승!", fg="red")
+         compare.configure(text="<<<<<")
+     else:
+         turn_result.configure(text="무승부", fg="gray")
+         compare.configure(text="=====")
 
-def game(x,y):
-    def win(): #사용자가 가위바위보를 이겼을 경우
-        label2.configure(text=">>>>>")
-        label4.configure(text="사용자 승!")
-    def lose(): #사용자가 졌을 경우
-        label2.configure(text="<<<<<")
-        label4.configure(text="사용자 패배!")
-    def draw(): #비겼을 경우
-        label2.configure(text="=====")
-        label4.configure(text="비겼습니다!")
+# 메인 프로그램
+main_window = Tk()
+rock_button = Button(main_window, width=20, text="바위", justify=CENTER,
+command=user_choice_rock, activebackground='black', activeforeground='white')
+paper_button = Button(main_window, width=20, text="보", justify=CENTER,
+command=user_choice_paper, activebackground='black', activeforeground='white')
+scissors_button = Button(main_window, width=20, text="가위", justify=CENTER,
+command=user_choice_scissors, activebackground='black', activeforeground='white')
+rock_image = PhotoImage(file="d:/rock.gif")
+paper_image = PhotoImage(file="d:/paper.gif")
+scissors_image = PhotoImage(file="d:/scissors.gif")
+user_image = Label(text="사용자", image=rock_image)
+user_image.image = rock_image
+compare = Label(main_window, justify=CENTER, font=("Helvetica", 30))
+oppo_image = Label(text="컴퓨터",image=paper_image)
+oppo_image.image = paper_image
+turn_result = Label(main_window, width=20, justify=CENTER, font=("Helvetica", 20))
 
-    if x==1: #사용자가 주먹을 냈을 때
-        if y==1:draw()
-        elif y==2:lose()
-        else:win()
-    elif x==2: #사용자가 가위를 냈을 때
-        if y==1:win()
-        elif y==2:draw()
-        else:lose()
-    else: #사용자가 보를 냈을 때
-        if y==1:lose()
-        elif y==2:win()
-        else:draw()
+# 그리드 생성
+rock_button.grid(row=5, column=1)
+paper_button.grid(row=5, column=2)
+scissors_button.grid(row=5, column=3)
+user_image.grid(row=3, column=1)
+compare.grid(row=3, column=2)
+oppo_image.grid(row=3, column=3)
+turn_result.grid(row=4, column=2)
+
+# GUI화면 루프처리
+main_window.mainloop()
+
+#로그인하는 프로그램 만들어보기
+from tkinter import *
 
 window = Tk()
-font1 = ("굴림체",30,"bold") #폰트 설정
-font2 = ("굴림체",20,"bold") #폰트 설정
-A = {1:"C:/Users/박서진/Desktop/1.gif",2:"C:/Users/박서진/Desktop/2.gif",3:"C:/Users/정다빈/Desktop/3.gif"} #딕셔너리를 이용해 파일 경로를 저장해서 불러오기 편하게 해줌
-
-photo1 = PhotoImage(file=A[3]) #파일 경로를 설정하여 사진을 불러옴
-photo2 = PhotoImage(file=A[3]) #파일 경로를 설정하여 사진을 불러옴
-
-label1 = Label(window, image=photo1)
-label2 = Label(window, text = "=====",font=font1)
-label3 = Label(window, image=photo2)
-label1.grid(row=0, column=0)
-label2.grid(row=0, column=1, padx=50)
-label3.grid(row=0, column=2)
-
-label4 = Label(window, text = "무승부!",font=font2,fg="green")
-label4.grid(row=1, column=1)
-
-button1 = Button(window,text="바위",command=lambda: change_image(1))
-#바위 버튼을 누르면 change_image함수에 1의 값을 넣어 실행함
-button2 = Button(window,text="보",command=lambda: change_image(2))
-#보 버튼을 누르면 change_image함수에 2의 값을 넣어 실행함
-button3 = Button(window,text="가위",command=lambda: change_image(3))
-#가위 버튼을 누르면 change_image함수에 3의 값을 넣어 실행함
-button1.grid(row=2,column=0,ipadx=50)
-button2.grid(row=2,column=1,ipadx=50)
-button3.grid(row=2,column=2,ipadx=50)
-
+label1 = Label(window, text="로그인 하세요!!!", font=("Helvetica", 20))
+label1.pack()
+label2 = Label(window, text="아이디")
+label2.pack()
+entry1 = Entry(window)
+entry1.pack()
+label2 = Label(window, text="패스워드")
+label2.pack()
+entry2 = Entry(window)
+entry2.pack()
+button1 = Button(window, text="로그인")
+button1.pack()
 window.mainloop()
